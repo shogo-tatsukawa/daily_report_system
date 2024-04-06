@@ -33,7 +33,7 @@
                                     （削除済み）
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="<c:url value='?action=${actEmp}&commannd=${commShow}&id=${employee.id}' />">詳細をみる</a>
+                                    <a href="<c:url value='?action=${actEmp}&command=${commShow}&id=${employee.id}' />">詳細をみる</a>
                                 </c:otherwise>
                             </c:choose>
                         </td>
