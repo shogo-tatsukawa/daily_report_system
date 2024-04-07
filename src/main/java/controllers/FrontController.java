@@ -29,13 +29,13 @@ public class FrontController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //パラメータに該当するActionクラスのインスタンス
+        // パラメータに該当するActionクラスのインスタンス
         ActionBase action = getAction(request, response);
 
-        //サーブレットコンテキスト、リクエスト、レスポンスをActionインスタンスのフィールドに設定
+        // サーブレットコンテキスト、リクエスト、レスポンスをActionインスタンスのフィールドに設定
         action.init(getServletContext(), request, response);
 
-        //Actionクラスの処理を呼び出し
+        // Actionクラスの処理を呼び出し
         action.process();
     }
 
@@ -57,13 +57,15 @@ public class FrontController extends HttpServlet {
         ActionBase action = null;
         try {
 
-            //リクエストからパラメータ"action"の値を取得 (例:"Employee"、"Report")
+            // リクエストからパラメータ"action"の値を取得 (例:"Employee"、"Report")
             String actionString = request.getParameter(ForwardConst.ACT.getValue());
 
-            //該当するActionオブジェクトを作成 (例:リクエストからパラメータ action=Employee の場合、actions.EmployeeActionオブジェクト)
+            // 該当するActionオブジェクトを作成 (例:リクエストからパラメータ action=Employee の場合、actions.EmployeeActionオブジェクト)
             type = Class.forName(String.format("actions.%sAction", actionString));
 
-            //ActionBaseのオブジェクトにキャスト(例:actions.EmployeeActionオブジェクト→actions.ActionBaseオブジェクト)
+            // ActionBaseのオブジェクトにキャスト(例:actions.EmployeeActionオブジェクト→actions.ActionBaseオブジェクト)
+            // 「.getDeclaredConstructor()」でClass内のコンストラクタを呼び出し、
+            // 「.newInstance()」でインスタンス作成
             action = (ActionBase) (type.asSubclass(ActionBase.class)
                     .getDeclaredConstructor()
                     .newInstance());
