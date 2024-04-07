@@ -25,7 +25,7 @@
                     <th class="report_action">操作</th>
                 </tr>
                 <c:forEach var="report" items="${reports}" varStatus="status">
-                    <fmt:parseDate value="${report.report.Date}" pattern="yyyy-MM-dd" var="reportDay" type="date" />
+                    <fmt:parseDate value="${report.reportDate}" pattern="yyyy-MM-dd" var="reportDay" type="date" />
 
 
                     <tr class="row${status.count %2}">
