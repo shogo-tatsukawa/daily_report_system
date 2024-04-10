@@ -39,9 +39,19 @@ public interface JpaConst {
     String REP_COL_CREATED_AT = "created_at"; //登録日時
     String REP_COL_UPDATED_AT = "updated_at"; //更新日時
 
+    // フォロワーテーブル
+    String TABLE_FLW = "followers";  // テーブル名
+    // フォロワーテーブルカラム
+    String FLW_COL_ID = "id";  // id
+    String FLW_COL_USR = "user_id";  // フォローする人の従業員id
+    String FLW_COL_FLW = "follow_id";  // フォローされる人の従業員id
+    String FLW_COL_CREATED_AT = "created_at";  // 登録日時
+    String FLW_COL_UPDATED_AT = "updated_at";  // 更新日時
+
     //Entity名
-    String ENTITY_EMP = "employee"; //従業員
-    String ENTITY_REP = "report"; //日報
+    String ENTITY_EMP = "employee";  // 従業員
+    String ENTITY_REP = "report";  // 日報
+    String ENTITY_FLW = "follower";  // フォロワー
 
     //JPQL内パラメータ
     String JPQL_PARM_CODE = "code"; //社員番号
