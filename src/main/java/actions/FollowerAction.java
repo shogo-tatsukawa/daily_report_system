@@ -7,10 +7,12 @@ import javax.servlet.ServletException;
 
 import actions.views.EmployeeView;
 import actions.views.FollowerView;
+import actions.views.ReportView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import services.FollowerService;
+import services.ReportService;
 
 /**
  * フォロワーに関する処理を行うActionクラス
@@ -18,6 +20,7 @@ import services.FollowerService;
 public class FollowerAction extends ActionBase {
 
     private FollowerService service;
+    private ReportService service_rep;
 
 
     /**
@@ -27,10 +30,12 @@ public class FollowerAction extends ActionBase {
     public void process() throws ServletException, IOException {
 
         service = new FollowerService();
+        service_rep = new ReportService();
 
         // メソッドを実行
         invoke();
         service.close();
+        service_rep.close();
     }
 
 
@@ -66,6 +71,32 @@ public class FollowerAction extends ActionBase {
 
         // 一覧画面を表示
         forward(ForwardConst.FW_FLW_INDEX);
+    }
+
+
+    /**
+     * 新規登録画面を表示する
+     */
+    public void entryNew() throws ServletException, IOException {
+
+        putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+
+        // idを条件に日報データを取得する
+        ReportView rv = service_rep.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+
+        if (rv == null) {
+            // 該当の日報データが存在しない場合はエラー画面を表示
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+
+        } else {
+            //フォロワー情報の空インスタンスに、フォロワーのIDを設定する
+            FollowerView fv = new FollowerView();
+            fv.setFollower(rv);
+            putRequestScope(AttributeConst.FOLLOWER, fv);  // 取得した日報データ
+
+            // 新規登録画面を表示
+            forward(ForwardConst.FW_FLW_NEW);
+        }
     }
 
 }

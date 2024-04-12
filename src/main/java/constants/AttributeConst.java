@@ -51,7 +51,12 @@ public enum AttributeConst {
     REP_ID("id"),
     REP_DATE("report_date"),
     REP_TITLE("title"),
-    REP_CONTENT("content_msg");
+    REP_CONTENT("content_msg"),
+
+    // 以下追記
+    // フォロワー管理
+    FOLLOWER("follower"),
+    FLW_ID("id");
 
 
     private final String text;

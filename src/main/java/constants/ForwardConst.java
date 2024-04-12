@@ -43,7 +43,9 @@ public enum ForwardConst {
     FW_REP_NEW("reports/new"),
     FW_REP_EDIT("reports/edit"),
     // 以下追記
-    FW_FLW_INDEX("followers/index");
+    FW_FLW_INDEX("followers/index"),
+    FW_FLW_NEW("followers/new");
+
 
     /*
      * 文字列
