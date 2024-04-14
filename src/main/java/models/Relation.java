@@ -24,27 +24,27 @@ import lombok.Setter;
  * フォロワーデータのDTOモデル
  *
  */
-@Table(name = JpaConst.TABLE_FLW)
+@Table(name = JpaConst.TABLE_REL)
 @NamedQueries({
     @NamedQuery(
-            name = JpaConst.Q_FLW_GET_ALL_MINE,
-            query = JpaConst.Q_FLW_GET_ALL_MINE_DEF),
+            name = JpaConst.Q_REL_GET_ALL_MINE,
+            query = JpaConst.Q_REL_GET_ALL_MINE_DEF),
     @NamedQuery(
-            name = JpaConst.Q_FLW_COUNT_ALL_MINE,
-            query = JpaConst.Q_FLW_COUNT_ALL_MINE_DEF)
+            name = JpaConst.Q_REL_COUNT_ALL_MINE,
+            query = JpaConst.Q_REL_COUNT_ALL_MINE_DEF)
 })
 @Getter // 全てのクラスフィールドについてgetterを自動生成する(Lombok)
 @Setter // 全てのクラスフィールドについてsetterを自動生成する(Lombok)
 @NoArgsConstructor // 引数なしコンストラクタを自動生成する(Lombok)
 @AllArgsConstructor // 全てのクラスフィールドを引数にもつ引数ありコンストラクタを自動生成する(Lombok)
 @Entity
-public class Follower {
+public class Relation {
 
     /**
      * id
      */
     @Id
-    @Column(name = JpaConst.FLW_COL_ID)
+    @Column(name = JpaConst.REL_COL_ID)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -52,25 +52,25 @@ public class Follower {
      * フォロワーを登録した従業員
      */
     @ManyToOne
-    @JoinColumn(name = JpaConst.FLW_COL_USR, nullable = false)
-    private Employee employee;
+    @JoinColumn(name = JpaConst.REL_COL_FLWR, nullable = false)
+    private Employee follower;
 
     /**
      * フォローされた従業員
      */
     @ManyToOne
-    @JoinColumn(name = JpaConst.FLW_COL_FLW, nullable = false)
-    private Report follower;
+    @JoinColumn(name = JpaConst.REL_COL_FLWD, nullable = false)
+    private Employee followed;
 
     /**
      * 登録日時
      */
-    @Column(name = JpaConst.FLW_COL_CREATED_AT, nullable = false)
+    @Column(name = JpaConst.REL_COL_CREATED_AT, nullable = false)
     private LocalDateTime createdAt;
 
     /**
      * 更新日時
      */
-    @Column(name = JpaConst.FLW_COL_UPDATED_AT, nullable = false)
+    @Column(name = JpaConst.REL_COL_UPDATED_AT, nullable = false)
     private LocalDateTime updatedAt;
 }

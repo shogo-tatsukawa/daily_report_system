@@ -54,9 +54,12 @@ public enum AttributeConst {
     REP_CONTENT("content_msg"),
 
     // 以下追記
-    // フォロワー管理
-    FOLLOWER("follower"),
-    FLW_ID("id");
+    // 関係性管理
+    RELATION("relation"),
+    RELATIONS("relations"),
+    REL_COUNT("relation_count"),
+    REL_ID("id"),
+    REL_FLW("follower");
 
 
     private final String text;

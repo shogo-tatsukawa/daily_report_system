@@ -13,7 +13,7 @@ public enum ForwardConst {
     ACT_EMP("Employee"),
     ACT_REP("Report"),
     ACT_AUTH("Auth"),
-    ACT_FLW("Follower"),  // 追記
+    ACT_REL("Relation"),  // 追記
 
     // command
     CMD("command"),
@@ -43,8 +43,8 @@ public enum ForwardConst {
     FW_REP_NEW("reports/new"),
     FW_REP_EDIT("reports/edit"),
     // 以下追記
-    FW_FLW_INDEX("followers/index"),
-    FW_FLW_NEW("followers/new");
+    FW_REL_INDEX("relations/index"),
+    FW_REL_NEW("relations/new");
 
 
     /*

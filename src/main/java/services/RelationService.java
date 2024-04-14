@@ -5,16 +5,16 @@ import java.util.List;
 
 import actions.views.EmployeeConverter;
 import actions.views.EmployeeView;
-import actions.views.FollowerConverter;
-import actions.views.FollowerView;
+import actions.views.RelationConverter;
+import actions.views.RelationView;
 import constants.JpaConst;
-import models.Follower;
+import models.Relation;
 
 /**
  * フォロワーテーブルの操作に関わる処理を行うクラス
  *
  */
-public class FollowerService extends ServiceBase {
+public class RelationService extends ServiceBase {
 
     /**
      * 指定した従業員が作成したフォロワーデータを、指定されたページ数の一覧画面に表示する分取得しFollowerViewのリストで返却する
@@ -22,13 +22,13 @@ public class FollowerService extends ServiceBase {
      * @param page ページ数
      * @return 一覧画面に表示するデータのリスト
      */
-    public List<FollowerView> getMinePerPage(EmployeeView employee, int page) {
+    public List<RelationView> getMinePerPage(EmployeeView employee, int page) {
 
-        List<Follower> followers = em.createNamedQuery(JpaConst.Q_FLW_GET_ALL_MINE, Follower.class)
+        List<Relation> relations = em.createNamedQuery(JpaConst.Q_REL_GET_ALL_MINE, Relation.class)
                 .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModel(employee))
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .getResultList();
-        return FollowerConverter.toViewList(followers);
+        return RelationConverter.toViewList(relations);
     }
 
 
@@ -39,7 +39,7 @@ public class FollowerService extends ServiceBase {
      */
     public long countAllMine(EmployeeView employee) {
 
-        long count = (long) em.createNamedQuery(JpaConst.Q_FLW_COUNT_ALL_MINE, Long.class)
+        long count = (long) em.createNamedQuery(JpaConst.Q_REL_COUNT_ALL_MINE, Long.class)
                 .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModel(employee))
                 .getSingleResult();
 
@@ -52,8 +52,8 @@ public class FollowerService extends ServiceBase {
      * @param id
      * @return 取得データのインスタンス
      */
-    public FollowerView findOne(int id) {
-        return FollowerConverter.toView(findOneInternal(id));
+    public RelationView findOne(int id) {
+        return RelationConverter.toView(findOneInternal(id));
     }
 
 
@@ -62,11 +62,11 @@ public class FollowerService extends ServiceBase {
      * @param fv フォロワーの登録内容
      * バリデーションは後から作成
      */
-    public void create(FollowerView fv) {
+    public void create(RelationView rv) {
         LocalDateTime ldt = LocalDateTime.now();
-        fv.setCreatedAt(ldt);
-        fv.setUpdatedAt(ldt);
-        createInternal(fv);
+        rv.setCreatedAt(ldt);
+        rv.setUpdatedAt(ldt);
+        createInternal(rv);
         }
 
 
@@ -80,8 +80,8 @@ public class FollowerService extends ServiceBase {
      * @param id
      * @return 取得データのインスタンス
      */
-    private Follower findOneInternal(int id) {
-        return em.find(Follower.class, id);
+    private Relation findOneInternal(int id) {
+        return em.find(Relation.class, id);
     }
 
 
@@ -89,10 +89,10 @@ public class FollowerService extends ServiceBase {
      * フォロワーデータを1件登録する
      * @param fv フォロワーデータ
      */
-    private void createInternal(FollowerView fv) {
+    private void createInternal(RelationView rv) {
 
         em.getTransaction().begin();
-        em.persist(FollowerConverter.toModel(fv));
+        em.persist(RelationConverter.toModel(rv));
         em.getTransaction().commit();
     }
 }

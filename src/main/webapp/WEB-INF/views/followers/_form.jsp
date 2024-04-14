@@ -8,8 +8,9 @@
 <br /><br />
 
 <label>フォロワー</label><br />
-<c:out value="${follower.follower.employee.name}" />
+<c:out value="${follower.follower.name}" />
 <br /><br />
 <input type="hidden" name="${AttributeConst.FLW_ID.getValue()}" value="${follower.id}" />
+<input type="hidden" name="${AttributeConst.EMP_ID.getValue()}" value="${follower.follower.id}" />
 <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
 <button type="submit">投稿</button>
