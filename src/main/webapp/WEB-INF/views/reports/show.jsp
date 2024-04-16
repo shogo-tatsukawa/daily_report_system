@@ -4,7 +4,7 @@
 <%@ page import="constants.ForwardConst" %>
 
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
-<c:set var="actFlw" value="${ForwardConst.ACT_FLW.getValue()}" />
+<c:set var="actRel" value="${ForwardConst.ACT_REL.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commEdt" value="${ForwardConst.CMD_EDIT.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
@@ -50,7 +50,7 @@
 
         <c:if test="${sessionScope.login_employee.id != report.employee.id}">
             <p>
-                <a href="<c:url value='?action=${actFlw}&command=${commNew}&id=${report.id}' />">この従業員をフォローする</a>
+                <a href="<c:url value='?action=${actRel}&command=${commNew}&id=${report.id}' />">この従業員をフォローする</a>
             </p>
         </c:if>
 

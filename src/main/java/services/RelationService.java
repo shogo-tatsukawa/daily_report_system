@@ -25,7 +25,7 @@ public class RelationService extends ServiceBase {
     public List<RelationView> getMinePerPage(EmployeeView employee, int page) {
 
         List<Relation> relations = em.createNamedQuery(JpaConst.Q_REL_GET_ALL_MINE, Relation.class)
-                .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModel(employee))
+                .setParameter(JpaConst.JPQL_PARM_EMPLOYEEID, (EmployeeConverter.toModel(employee)).getId())
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .getResultList();
         return RelationConverter.toViewList(relations);
@@ -40,7 +40,7 @@ public class RelationService extends ServiceBase {
     public long countAllMine(EmployeeView employee) {
 
         long count = (long) em.createNamedQuery(JpaConst.Q_REL_COUNT_ALL_MINE, Long.class)
-                .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModel(employee))
+                .setParameter(JpaConst.JPQL_PARM_EMPLOYEEID, (EmployeeConverter.toModel(employee)).getId())
                 .getSingleResult();
 
         return count;

@@ -58,6 +58,7 @@ public interface JpaConst {
     String JPQL_PARM_CODE = "code"; //社員番号
     String JPQL_PARM_PASSWORD = "password"; //パスワード
     String JPQL_PARM_EMPLOYEE = "employee"; //従業員
+    String JPQL_PARM_EMPLOYEEID = "employee_id"; //従業員id  // 追記
 
     //NamedQueryの nameとquery
     //全ての従業員をidの降順に取得する
@@ -88,10 +89,10 @@ public interface JpaConst {
     // 以下追記
     //指定した従業員が作成した関係テーブルを全件idの降順で取得する
     String Q_REL_GET_ALL_MINE = ENTITY_REL + ".getAllMine";
-    String Q_REL_GET_ALL_MINE_DEF = "SELECT r FROM Relation AS r WHERE r.follower = :" + JPQL_PARM_EMPLOYEE + " ORDER BY r.id DESC";
+    String Q_REL_GET_ALL_MINE_DEF = "SELECT r FROM Relation AS r WHERE r.follower_id = :" + JPQL_PARM_EMPLOYEEID + " ORDER BY r.id DESC";
     //指定した従業員が作成した関係テーブルの件数を取得する
     String Q_REL_COUNT_ALL_MINE = ENTITY_REL + ".countAllMine";
-    String Q_REL_COUNT_ALL_MINE_DEF = "SELECT COUNT(r) FROM Relation AS r WHERE r.follower = :" + JPQL_PARM_EMPLOYEE;
+    String Q_REL_COUNT_ALL_MINE_DEF = "SELECT COUNT(r) FROM Relation AS r WHERE r.follower_id = :" + JPQL_PARM_EMPLOYEEID;
 
 
 }

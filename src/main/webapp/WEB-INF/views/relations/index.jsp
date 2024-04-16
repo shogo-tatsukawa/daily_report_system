@@ -19,12 +19,12 @@
         <table id="relation_list">
             <tbody>
                 <tr>
-                    <th class="follower_name">氏名</th>
-                    <th class="followed_name">フォロワー</th>
+                    <th class="follower_name">フォローした人</th>
+                    <th class="followed_name">フォローされた人</th>
                 </tr>
                 <c:forEach var="relation" items="${relations}" varStatus="status">
                     <tr class="row${status.count % 2}">
-                        <td class="follower_name"><c:out value="${relation.follower.name}" /></td>
+                        <td class="follower_name"><c:out value="${sessionScope.login_employee.name}" /></td>
                         <td class="followed_name"><c:out value="${relation.followed.name}" /></td>
                     </tr>
                 </c:forEach>

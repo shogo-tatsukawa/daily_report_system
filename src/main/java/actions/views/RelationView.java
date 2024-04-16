@@ -25,11 +25,12 @@ public class RelationView {
     /**
      * フォロワーを登録した従業員
      */
-    private EmployeeView follower;
+    private Integer follower_id;
 
     /**
      * フォローされた従業員
      */
+    //private Integer followed_id;
     private EmployeeView followed;
 
     /**

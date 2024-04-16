@@ -57,7 +57,7 @@ public enum AttributeConst {
     // 関係性管理
     RELATION("relation"),
     RELATIONS("relations"),
-    REL_COUNT("relation_count"),
+    REL_COUNT("relations_count"),
     REL_ID("id"),
     REL_FLW("follower");
 

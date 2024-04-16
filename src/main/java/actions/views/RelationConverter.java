@@ -19,8 +19,9 @@ public class RelationConverter {
     public static Relation toModel(RelationView rv) {
         return new Relation(
                 rv.getId(),
-                EmployeeConverter.toModel(rv.getFollower()),
+                rv.getFollower_id(),
                 EmployeeConverter.toModel(rv.getFollowed()),
+                //rv.getFollowed_id(),
                 rv.getCreatedAt(),
                 rv.getUpdatedAt());
     }
@@ -37,8 +38,9 @@ public class RelationConverter {
         }
         return new RelationView(
                 r.getId(),
-                EmployeeConverter.toView(r.getFollower()),
+                r.getFollower_id(),
                 EmployeeConverter.toView(r.getFollowed()),
+                //r.getFollowed_id(),
                 r.getCreatedAt(),
                 r.getUpdatedAt());
     }
@@ -65,8 +67,9 @@ public class RelationConverter {
      */
     public static void copyViewToModel(Relation r, RelationView rv) {
         r.setId(rv.getId());
-        r.setFollower(EmployeeConverter.toModel(rv.getFollower()));
+        r.setFollower_id(rv.getFollower_id());
         r.setFollowed(EmployeeConverter.toModel(rv.getFollowed()));
+        //r.setFollowed_id(rv.getFollowed_id());
         r.setCreatedAt(rv.getCreatedAt());
         r.setUpdatedAt(rv.getUpdatedAt());
     }

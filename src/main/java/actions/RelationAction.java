@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 
 import actions.views.EmployeeView;
 import actions.views.RelationView;
+import actions.views.ReportView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
@@ -80,7 +81,6 @@ public class RelationAction extends ActionBase {
     /**
      * 新規登録画面を表示する
      */
-    /*
     public void entryNew() throws ServletException, IOException {
 
         putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
@@ -93,16 +93,17 @@ public class RelationAction extends ActionBase {
             forward(ForwardConst.FW_ERR_UNKNOWN);
 
         } else {
-            //フォロワー情報の空インスタンスに、フォロワーのIDを設定する
-            FollowerView fv = new FollowerView();
-            fv.setFollower(rv.getEmployee());
-            putRequestScope(AttributeConst.FOLLOWER, fv);  // 取得したフォロワーデータ
+            //関係情報の空インスタンスにfollowedのIDを設定する
+            RelationView relv = new RelationView();
+            relv.setFollowed(rv.getEmployee());
+            putRequestScope(AttributeConst.RELATION, relv);  // 取得したフォロワーデータ
+            //putRequestScope(AttributeConst.REPORT, rv);  // 取得したReportデータ
+            // putRequestScope(AttributeConst.REP_ID, toNumber(getRequestParam(AttributeConst.REP_ID)));  // レポートID
 
             // 新規登録画面を表示
-            forward(ForwardConst.FW_FLW_NEW);
+            forward(ForwardConst.FW_REL_NEW);
         }
     }
-    */
 
 
     /**
@@ -110,7 +111,6 @@ public class RelationAction extends ActionBase {
      * @throws ServletException
      * @throws IOException
      */
-    /*
     public void create() throws ServletException, IOException {
 
         //CSRF対策 tokenのチェック
@@ -119,37 +119,38 @@ public class RelationAction extends ActionBase {
             //セッションからログイン中の従業員情報を取得
             EmployeeView loginEmployee = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
-            // リクエストスコープからフォロワーが作成したレポートのID情報を取得
+            // リクエストスコープからフォローされた人が作成したレポートのID情報を取得
             // idを条件に日報データを取得する
-            EmployeeView followerEmployee = service_emp.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
-            List<EmployeeView> followerEmployees = new ArrayList<>();
-            followerEmployees.add(followerEmployee);
+            EmployeeView followedEmployee = service_emp.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
+            // idを条件に日報データを取得する
+            //Integer followed_id = toNumber(getRequestParam(AttributeConst.EMP_ID));
 
-            if (followerEmployee == null) {
+            //if (followedEmployee == null) {
+            if (loginEmployee == null) {
                 // 該当の従業員データが存在しない場合はエラー画面を表示
                 forward(ForwardConst.FW_ERR_UNKNOWN);
 
             } else {
                 // パラメータの値を元にフォロワー情報のインスタンスを作成する
-                FollowerView fv = new FollowerView(
+                RelationView relv = new RelationView(
                         null,
-                        followerEmployees,  // ログインしている従業員をフォロワー作成者として登録する
-                        loginEmployee,
+                        loginEmployee.getId(),  // ログインしている従業員をフォロワー作成者として登録する
+                        //followed_id,
+                        followedEmployee,
                         null,
                         null);
 
                 // フォロワー登録
-                service.create(fv);
+                service.create(relv);
 
                 //セッションに登録完了のフラッシュメッセージを設定
                 //putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
 
                 //一覧画面にリダイレクト
-                redirect(ForwardConst.ACT_FLW, ForwardConst.CMD_INDEX);
+                redirect(ForwardConst.ACT_REL, ForwardConst.CMD_INDEX);
             }
 
         }
     }
-    */
 
 }

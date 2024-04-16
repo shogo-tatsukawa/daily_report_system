@@ -51,16 +51,17 @@ public class Relation {
     /**
      * フォロワーを登録した従業員
      */
-    @ManyToOne
-    @JoinColumn(name = JpaConst.REL_COL_FLWR, nullable = false)
-    private Employee follower;
+    @Column(name = JpaConst.REL_COL_FLWR, nullable = false)
+    private Integer follower_id;
 
     /**
      * フォローされた従業員
      */
     @ManyToOne
     @JoinColumn(name = JpaConst.REL_COL_FLWD, nullable = false)
+    //@Column(name = JpaConst.REL_COL_FLWD, nullable = false)
     private Employee followed;
+    //private Integer followed_id;
 
     /**
      * 登録日時
