@@ -31,6 +31,19 @@ public class RelationService extends ServiceBase {
         return RelationConverter.toViewList(relations);
     }
 
+    /**
+     * 指定した従業員が作成したフォロワーデータをすべて取得しRelationViewのリストで返却する
+     * @param employee 従業員
+     * @return 一覧画面に表示するデータのリスト
+     */
+    public List<RelationView> getMineAll(EmployeeView employee) {
+
+        List<Relation> relations = em.createNamedQuery(JpaConst.Q_REL_GET_ALL_MINE, Relation.class)
+                .setParameter(JpaConst.JPQL_PARM_EMPLOYEEID, (EmployeeConverter.toModel(employee)).getId())
+                .getResultList();
+        return RelationConverter.toViewList(relations);
+    }
+
 
     /**
      * 指定した従業員が作成したフォロワーデータの件数を取得し、返却する

@@ -1,6 +1,7 @@
 package actions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -77,6 +78,55 @@ public class RelationAction extends ActionBase {
         forward(ForwardConst.FW_REL_INDEX);
     }
 
+    /**
+     * フォロワーしている従業員の日報を一覧表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void indexFollowed() throws ServletException, IOException {
+
+        // セッションからログイン中の従業員情報を取得
+        EmployeeView loginEmployee = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+
+        // フォローしている従業員のリストを取得
+        List<RelationView> followedList = service.getMineAll(loginEmployee);
+
+
+        // IDリストに変換
+        List<Integer> followedId = new ArrayList<>();
+
+        for (RelationView rv : followedList) {
+            followedId.add(rv.getFollowed().getId());
+        }
+
+        //指定されたページ数の一覧画面に表示する日報データを取得
+        int page = getPage();
+        List<ReportView> reports = service_rep.getSelectPerPage(followedId, page);
+
+        // フォローしている従業員が作成した日報データの件数を取得
+        long reportsCount = service_rep.countAllSelect(followedId);
+
+        putRequestScope(AttributeConst.REPORTS, reports);  // 取得したフォロワーデータ
+        putRequestScope(AttributeConst.REP_COUNT, reportsCount);  // ログイン中の従業員が作成したフォロワーの数
+        putRequestScope(AttributeConst.PAGE, page);  // ページ数
+        putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE);  // 1ページに表示するレコードの数
+
+
+        putRequestScope(AttributeConst.RELATIONS, followedList);  // 取得したフォロワーデータ
+
+        // セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
+        String flush = getSessionScope(AttributeConst.FLUSH);
+        if (flush != null) {
+            putRequestScope(AttributeConst.FLUSH, flush);
+            removeSessionScope(AttributeConst.FLUSH)
+            ;
+        }
+
+        // 一覧画面を表示
+        forward(ForwardConst.FW_REP_INDEX);
+        //forward(ForwardConst.FW_REL_TEST);
+    }
+
 
     /**
      * 新規登録画面を表示する
@@ -151,6 +201,39 @@ public class RelationAction extends ActionBase {
             }
 
         }
+    }
+
+    /**
+     * 詳細画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void show() throws ServletException, IOException {
+
+        // 従業員IDを元に従業員情報を取得する
+        EmployeeView ev = service_emp.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
+
+        // フォロワー中の従業員が作成した日報データを、指定されたページ数の一覧画面に表示する分取得する
+        int page = getPage();
+        List<ReportView> reports = service_rep.getMinePerPage(ev, page);
+
+        //ログイン中の従業員が作成した日報データの件数を取得
+        long myReportsCount = service_rep.countAllMine(ev);
+
+        putRequestScope(AttributeConst.REPORTS, reports); //取得した日報データ
+        putRequestScope(AttributeConst.REP_COUNT, myReportsCount); //ログイン中の従業員が作成した日報の数
+        putRequestScope(AttributeConst.PAGE, page); //ページ数
+        putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
+
+        //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
+        String flush = getSessionScope(AttributeConst.FLUSH);
+        if (flush != null) {
+            putRequestScope(AttributeConst.FLUSH, flush);
+            removeSessionScope(AttributeConst.FLUSH);
+        }
+
+        //一覧画面を表示
+        forward(ForwardConst.FW_REP_INDEX);
     }
 
 }

@@ -51,6 +51,8 @@
                 </c:choose>
             </c:forEach>
         </div>
-        <p><a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規日報の登録</a></p>
+        <c:if test="${sessionScope.login_employee.id == report.employee.id}">
+            <p><a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規日報の登録</a></p>
+        </c:if>
     </c:param>
 </c:import>

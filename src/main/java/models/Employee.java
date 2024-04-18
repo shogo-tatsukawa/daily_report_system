@@ -93,4 +93,10 @@ public class Employee {
     @Column(name = JpaConst.EMP_COL_DELETE_FLAG, nullable = false)
     private Integer deleteFlag;
 
+    /**
+     * フォローしている従業員のリスト
+     */
+    //@OneToMany(mappedBy = "followed")
+    //private List<Relation> followedList;
+
 }

@@ -29,6 +29,7 @@ public enum ForwardConst {
     CMD_UPDATE("update"),
     CMD_DESTROY("destroy"),
     CMD_INDEX_FOLLOW("indexFollow"),  // 追加 いらないかも
+    CMD_INDEX_FOLLOWED("indexFollowed"),  // 追加
 
     // jsp
     FW_ERR_UNKNOWN("error/unknown"),
@@ -44,7 +45,10 @@ public enum ForwardConst {
     FW_REP_EDIT("reports/edit"),
     // 以下追記
     FW_REL_INDEX("relations/index"),
-    FW_REL_NEW("relations/new");
+    FW_REL_NEW("relations/new"),
+    FW_REL_SHOW("relations/show"),
+    FW_REL_TEST("relations/test");
+
 
 
     /*

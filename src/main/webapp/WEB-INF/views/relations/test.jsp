@@ -22,33 +22,16 @@
         <table id="relation_list">
             <tbody>
                 <tr>
-                    <th class="followed_name">フォロワー</th>
-                    <th class="relation_action">操作</th>
+                    <th class="follower_id">従業員ID</th>
+                    <th class="followed_name">フォロワー名</th>
                 </tr>
                 <c:forEach var="relation" items="${relations}" varStatus="status">
                     <tr class="row${status.count % 2}">
+                        <td class="follower_id"><c:out value="${relation.follower_id}" /></td>
                         <td class="followed_name"><c:out value="${relation.followed.name}" /></td>
-                        <td class="relation_action">
-                            <a href="<c:url value='?action=${actRel}&command=${commShow}&id=${relation.followed.id}' />">日報を見る</a>
-                        </td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
-
-        <div id="pagination">
-            （全 ${relations_count} 件）<br />
-            <c:forEach var="i" begin="1" end="${((relations_count - 1) / maxRow) + 1}" step="1">
-                <c:choose>
-                    <c:when test="${i == page}">
-                        <c:out value="${i}" />&nbsp;
-                    </c:when>
-                    <c:otherwise>
-                        <a href="<c:url value='?action=${actRel}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-        </div>
-        <p><a href="<c:url value='?action=${actRel}&command=${commIdxFol}' />">フォロワーが作成した日報一覧をみる</a></p>
     </c:param>
 </c:import>
