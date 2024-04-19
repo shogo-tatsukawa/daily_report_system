@@ -28,7 +28,6 @@ public enum ForwardConst {
     CMD_EDIT("edit"),
     CMD_UPDATE("update"),
     CMD_DESTROY("destroy"),
-    CMD_INDEX_FOLLOW("indexFollow"),  // 追加 いらないかも
     CMD_INDEX_FOLLOWED("indexFollowed"),  // 追加
 
     // jsp
