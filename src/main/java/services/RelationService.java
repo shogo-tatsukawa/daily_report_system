@@ -9,6 +9,7 @@ import actions.views.RelationConverter;
 import actions.views.RelationView;
 import constants.JpaConst;
 import models.Relation;
+import models.validators.RelationValidator;
 
 /**
  * フォロワーテーブルの操作に関わる処理を行うクラス
@@ -72,15 +73,20 @@ public class RelationService extends ServiceBase {
 
     /**
      * フォロワーの登録内容を元にデータを1件作成し、フォロワーテーブルに登録する
-     * @param fv フォロワーの登録内容
+     * @param rv フォロワーの登録内容
      * バリデーションは後から作成
      */
-    public void create(RelationView rv) {
-        LocalDateTime ldt = LocalDateTime.now();
-        rv.setCreatedAt(ldt);
-        rv.setUpdatedAt(ldt);
-        createInternal(rv);
+    public List<String> create(RelationView rv, RelationService service, EmployeeView ev) {
+        List<String> errors = RelationValidator.validate(rv, service, ev);
+        if (errors.size() == 0) {
+            LocalDateTime ldt = LocalDateTime.now();
+            rv.setCreatedAt(ldt);
+            rv.setUpdatedAt(ldt);
+            createInternal(rv);
         }
+        // バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
+        return errors;
+    }
 
 
     /**

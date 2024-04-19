@@ -12,6 +12,7 @@ import actions.views.ReportView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
+import constants.MessageConst;
 import services.EmployeeService;
 import services.RelationService;
 import services.ReportService;
@@ -191,13 +192,31 @@ public class RelationAction extends ActionBase {
                         null);
 
                 // フォロワー登録
-                service.create(relv);
+                List<String> errors = service.create(relv, service, loginEmployee);
 
-                //セッションに登録完了のフラッシュメッセージを設定
-                //putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
+                if (errors.size() > 0) {
+                    // 登録中にエラーがあった場合
 
-                //一覧画面にリダイレクト
-                redirect(ForwardConst.ACT_REL, ForwardConst.CMD_INDEX);
+                    // エラーメッセージを結合
+                    String errorMessage = "";
+                    for (String error : errors) {
+                        errorMessage = errorMessage + error + "\n";
+                    }
+                    // セッションに登録エラーのフラッシュメッセージを設定
+                    putSessionScope(AttributeConst.FLUSH, errorMessage);
+
+                    // 一覧画面にリダイレクト
+                    redirect(ForwardConst.ACT_REL, ForwardConst.CMD_INDEX);
+                } else {
+                    // 登録中にエラーがなかった場合
+
+                    //セッションに登録完了のフラッシュメッセージを設定
+                    putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
+
+                    //一覧画面にリダイレクト
+                    redirect(ForwardConst.ACT_REL, ForwardConst.CMD_INDEX);
+                }
+
             }
 
         }
