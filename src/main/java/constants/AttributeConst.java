@@ -59,7 +59,8 @@ public enum AttributeConst {
     RELATIONS("relations"),
     REL_COUNT("relations_count"),
     REL_ID("id"),
-    REL_FLW("follower");
+    REL_FLW("follower"),
+    REL_FLAG("relation_flag");
 
 
     private final String text;

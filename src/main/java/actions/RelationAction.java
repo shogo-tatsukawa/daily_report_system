@@ -112,6 +112,7 @@ public class RelationAction extends ActionBase {
         putRequestScope(AttributeConst.REP_COUNT, reportsCount);  // ログイン中の従業員が作成したフォロワーの数
         putRequestScope(AttributeConst.PAGE, page);  // ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE);  // 1ページに表示するレコードの数
+        putRequestScope(AttributeConst.REL_FLAG, 1);  // 関係性アクションからのフラグ
 
 
         // putRequestScope(AttributeConst.RELATIONS, followedList);  // 取得したフォロワーデータ

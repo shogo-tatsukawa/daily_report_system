@@ -4,7 +4,9 @@
 <%@ page import="constants.ForwardConst" %>
 
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
+<c:set var="actRel" value="${ForwardConst.ACT_REL.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
+<c:set var="commIdxFld" value="${ForwardConst.CMD_INDEX_FOLLOWED.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
 
@@ -46,7 +48,12 @@
                         <c:out value="${i}" />&nbsp;
                     </c:when>
                     <c:otherwise>
-                        <a href="<c:url value='?action=${actRep}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
+                        <c:if test="${relation_flag != 1}">
+                            <a href="<c:url value='?action=${actRep}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
+                        </c:if>
+                        <c:if test="${relation_flag == 1}">
+                            <a href="<c:url value='?action=${actRel}&command=${commIdxFld}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
+                        </c:if>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
