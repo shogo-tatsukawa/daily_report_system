@@ -21,7 +21,7 @@ import lombok.Setter;
 
 
 /**
- * フォロワーデータのDTOモデル
+ * 関係性データのDTOモデル
  *
  */
 @Table(name = JpaConst.TABLE_REL)

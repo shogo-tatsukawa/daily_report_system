@@ -12,13 +12,13 @@ import models.Relation;
 import models.validators.RelationValidator;
 
 /**
- * フォロワーテーブルの操作に関わる処理を行うクラス
+ * 関係性テーブルの操作に関わる処理を行うクラス
  *
  */
 public class RelationService extends ServiceBase {
 
     /**
-     * 指定した従業員が作成したフォロワーデータを、指定されたページ数の一覧画面に表示する分取得しFollowerViewのリストで返却する
+     * 指定した従業員が作成した関係性データを、指定されたページ数の一覧画面に表示する分取得しRelationViewのリストで返却する
      * @param employee 従業員
      * @param page ページ数
      * @return 一覧画面に表示するデータのリスト
@@ -33,7 +33,7 @@ public class RelationService extends ServiceBase {
     }
 
     /**
-     * 指定した従業員が作成したフォロワーデータをすべて取得しRelationViewのリストで返却する
+     * 指定した従業員が作成した関係性データをすべて取得しRelationViewのリストで返却する
      * @param employee 従業員
      * @return 一覧画面に表示するデータのリスト
      */
@@ -47,9 +47,9 @@ public class RelationService extends ServiceBase {
 
 
     /**
-     * 指定した従業員が作成したフォロワーデータの件数を取得し、返却する
+     * 指定した従業員が作成した関係性データの件数を取得し、返却する
      * @param employee
-     * @return フォロワーデータの件数
+     * @return 関係性データの件数
      */
     public long countAllMine(EmployeeView employee) {
 
@@ -62,7 +62,7 @@ public class RelationService extends ServiceBase {
 
 
     /**
-     * idを条件に取得したデータをFollowerViewのインスタンスで返却する
+     * idを条件に取得したデータをRelationViewのインスタンスで返却する
      * @param id
      * @return 取得データのインスタンス
      */
@@ -72,9 +72,8 @@ public class RelationService extends ServiceBase {
 
 
     /**
-     * フォロワーの登録内容を元にデータを1件作成し、フォロワーテーブルに登録する
-     * @param rv フォロワーの登録内容
-     * バリデーションは後から作成
+     * 関係性情報の登録内容を元にデータを1件作成し、関係性テーブルに登録する
+     * @param rv 関係性情報の登録内容
      */
     public List<String> create(RelationView rv, RelationService service, EmployeeView ev) {
         List<String> errors = RelationValidator.validate(rv, service, ev);

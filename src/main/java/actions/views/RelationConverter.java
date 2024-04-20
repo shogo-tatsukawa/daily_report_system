@@ -6,7 +6,7 @@ import java.util.List;
 import models.Relation;
 
 /**
- * フォロワーデータのDTOモデル⇔Viewモデルの変換を行うクラス
+ * 関係性データのDTOモデル⇔Viewモデルの変換を行うクラス
  *
  */
 public class RelationConverter {

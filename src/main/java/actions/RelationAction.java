@@ -18,7 +18,7 @@ import services.RelationService;
 import services.ReportService;
 
 /**
- * フォロワーに関する処理を行うActionクラス
+ * 関係性に関する処理を行うActionクラス
  */
 public class RelationAction extends ActionBase {
 
@@ -39,6 +39,7 @@ public class RelationAction extends ActionBase {
 
         // メソッドを実行
         invoke();
+
         service.close();
         service_emp.close();
         service_rep.close();
@@ -55,14 +56,14 @@ public class RelationAction extends ActionBase {
         // セッションからログイン中の従業員情報を取得
         EmployeeView loginEmployee = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
-        //指定されたページ数の一覧画面に表示するフォロワーデータを取得
+        //指定されたページ数の一覧画面に表示する関係性データを取得
         int page = getPage();
         List<RelationView> relations = service.getMinePerPage(loginEmployee, page);
 
-        // ログイン中の従業員が作成したフォロワーデータの件数を取得
+        // ログイン中の従業員が作成した関係性データの件数を取得
         long myRelationsCount = service.countAllMine(loginEmployee);
 
-        putRequestScope(AttributeConst.RELATIONS, relations);  // 取得したフォロワーデータ
+        putRequestScope(AttributeConst.RELATIONS, relations);  // 取得した関係性データ
         putRequestScope(AttributeConst.REL_COUNT, myRelationsCount);  // ログイン中の従業員が作成したフォロワーの数
         putRequestScope(AttributeConst.PAGE, page);  // ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE);  // 1ページに表示するレコードの数
@@ -80,7 +81,7 @@ public class RelationAction extends ActionBase {
     }
 
     /**
-     * フォロワーしている従業員の日報を一覧表示する
+     * フォローしている従業員の日報を一覧表示する
      * @throws ServletException
      * @throws IOException
      */
@@ -113,7 +114,7 @@ public class RelationAction extends ActionBase {
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE);  // 1ページに表示するレコードの数
 
 
-        putRequestScope(AttributeConst.RELATIONS, followedList);  // 取得したフォロワーデータ
+        // putRequestScope(AttributeConst.RELATIONS, followedList);  // 取得したフォロワーデータ
 
         // セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
         String flush = getSessionScope(AttributeConst.FLUSH);
@@ -131,6 +132,8 @@ public class RelationAction extends ActionBase {
 
     /**
      * 新規登録画面を表示する
+     * @throws ServletException
+     * @throws IOException
      */
     public void entryNew() throws ServletException, IOException {
 
@@ -170,14 +173,14 @@ public class RelationAction extends ActionBase {
             //セッションからログイン中の従業員情報を取得
             EmployeeView loginEmployee = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
-            // リクエストスコープからフォローされた人が作成したレポートのID情報を取得
-            // idを条件に日報データを取得する
+            // リクエストスコープからフォロワーの従業員ID情報を取得
+            // idを条件に従業員データを取得する
             EmployeeView followedEmployee = service_emp.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
             // idを条件に日報データを取得する
             //Integer followed_id = toNumber(getRequestParam(AttributeConst.EMP_ID));
 
             //if (followedEmployee == null) {
-            if (loginEmployee == null) {
+            if (loginEmployee == null || followedEmployee == null) {
                 // 該当の従業員データが存在しない場合はエラー画面を表示
                 forward(ForwardConst.FW_ERR_UNKNOWN);
 
@@ -185,13 +188,13 @@ public class RelationAction extends ActionBase {
                 // パラメータの値を元にフォロワー情報のインスタンスを作成する
                 RelationView relv = new RelationView(
                         null,
-                        loginEmployee.getId(),  // ログインしている従業員をフォロワー作成者として登録する
+                        loginEmployee.getId(),  // ログインしている従業員を関係性レコード作成者として登録する
                         //followed_id,
                         followedEmployee,
                         null,
                         null);
 
-                // フォロワー登録
+                // レコード登録
                 List<String> errors = service.create(relv, service, loginEmployee);
 
                 if (errors.size() > 0) {
@@ -232,7 +235,7 @@ public class RelationAction extends ActionBase {
         // 従業員IDを元に従業員情報を取得する
         EmployeeView ev = service_emp.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
 
-        // フォロワー中の従業員が作成した日報データを、指定されたページ数の一覧画面に表示する分取得する
+        // フォロー中の指定した従業員が作成した日報データを、指定されたページ数の一覧画面に表示する分取得する
         int page = getPage();
         List<ReportView> reports = service_rep.getMinePerPage(ev, page);
 
